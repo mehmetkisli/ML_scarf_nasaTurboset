@@ -130,7 +130,7 @@ Burada $T$ sıcaklık (temperature) hiperparametresidir. Her örnek için doğru
 - Batch size: 256
 - Epoch: deney senaryosuna göre (ör. 5 veya 10)
 
-Not: Grid aramasında kullanılan uygulamada, label*fraction < 1.0 iken pretraining’in “tam unlabeled havuz” yerine subsample edilmiş $X*{tr}$ üzerinde çalışması mümkündür (grid döngüsünde pretrain fonksiyonuna $X_{tr}$ verilmekte). Bu, self-supervised faydayı azaltabilecek bir uygulama farkıdır ve gelecekte düzeltme/ablasyon gerektirir.
+Not (güncel uygulama): Ön-eğitim (SCARF) etiketsiz havuz olarak train unit’lerinden üretilen tüm pencereleri kullanır; `label_fraction` yalnızca fine-tuning aşamasındaki etiketli pencere alt-örneklemesini etkiler.
 
 ### 6.2 Fine-tuning
 
@@ -249,7 +249,7 @@ Bu sonuç, seçilen mimari/augmentation ile self-supervised pretraining’in tes
 
 - **Seed hassasiyeti:** Tek seed ile raporlama yanıltıcı olabilir; ortalama±std önerilir.
 - **Hyperparametre kapsamı:** Grid sınırlı; daha geniş arama veya Bayes optimizasyonu anlamlı olabilir.
-- **Pretraining havuzu farkı:** Grid senaryosunda pretraining’in subsample üzerinde olması olası bir metodoloji farkıdır.
+- **Pretraining havuzu:** Ön-eğitim etiketsiz havuz olarak train pencerelerinin tamamını kullanır; `label_fraction` yalnızca fine-tuning’i etkiler.
 
 ---
 

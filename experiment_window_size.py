@@ -695,7 +695,7 @@ def main() -> None:
                     print("\n" + "-" * 70)
                     print(f"RUN: {tag}")
 
-                    encoder = pretrain_scarf(X_tr, input_dim=input_dim, cfg=cfg, device=device)
+                    encoder = pretrain_scarf(X_tr_full, input_dim=input_dim, cfg=cfg, device=device)
                     best_val_rmse = finetune_regressor(
                         encoder,
                         X_tr=X_tr,
