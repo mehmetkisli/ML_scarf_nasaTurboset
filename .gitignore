@@ -1,0 +1,28 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual environments
+.venv/
+venv/
+ENV/
+
+# Jupyter
+.ipynb_checkpoints/
+
+# OS
+.DS_Store
+
+# Experiment outputs / large artifacts
+archive/
+artifacts*/
+evaluation*/
+
+# Model checkpoints / weights
+*.pt
+*.pth
+*.ckpt
+
+# Common logs
+*.log

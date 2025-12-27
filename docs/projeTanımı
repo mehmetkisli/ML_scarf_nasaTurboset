@@ -1,0 +1,60 @@
+rojemizin adı: NASA Turbofan RUL Kestiriminde SCARF Adaptasyonu.
+
+Projenin Büyük Resmi (Adım Adım Yol Haritası)
+
+Projemiz 4 ana evreden oluşuyor. Hocanın "basit" diyemeyeceği kısım, bizim 2. ve 3. adımlarda yapacağımız "Etiketsiz Öğrenme" ve "Temsil Çıkarımı" süreçleridir.
+
+1. Adım: Veri Mühendisliği (Zaman Serisinden Tabloya)
+
+NASA verisi saniyeler bazında akan bir seridir. SCARF ise satır-sütun (tablo) verisi sever.
+
+Ne yapıyoruz?: Motorun son 30 zaman dilimini (cycle) alıp, bunları yan yana dizerek tek bir "uzun satır" (feature vector) oluşturuyoruz.
+
+Akademik Değeri: Zaman serisini, o anki "durumun parmak izine" dönüştürüyoruz.
+
+2. Adım: SCARF Ön-Eğitimi (Self-Supervised Learning)
+
+İşte projenin kalbi burası. Burada modelimize "bu motorun kaç saati kaldı" demiyoruz.
+
+Ne yapıyoruz?: Modelimize bir orijinal pencere (sağlıklı veri) bir de onun "bozulmuş" (corrupted) versiyonunu veriyoruz.
+
+Mantık: Model, "bu iki veri farklı görünse de aslında aynı motora ait" demeyi öğreniyor. Bunu yaparken sensörler arasındaki gizli fiziksel kuralları keşfediyor.
+
+Kullanılan Silah: InfoNCE Loss (Kontrastif Kayıp). İki benzer veriyi birbirine çekerken, diğer motorların verilerini itiyor.
+
+3. Adım: Fine-Tuning (Öğretilen Bilgiyi Kullanma)
+
+Modelimiz artık jet motorlarının nasıl davrandığını (fiziksel temsilini) öğrendi. Şimdi ona asıl soruyu soruyoruz.
+
+Ne yapıyoruz?: SCARF ile eğittiğimiz modeli dondurup, üzerine küçük bir "Tahmin Kafası" (Regression Head) ekliyoruz.
+
+Hedef: Çok az etiketli veriyle bile motorun ne zaman bozulacağını (RUL) yüksek doğrulukla tahmin etmek.
+
+4. Adım: Analiz ve Görselleştirme (Hocayı Etkileme Finali)
+
+Rakamlar her zaman yetmez, hoca görmek ister.
+
+Ne yapıyoruz?: Modelin içindeki 64 boyutlu vektörleri 2 boyuta (t-SNE) indiriyoruz.
+
+Görsel Şov: Motorun yeni olduğu andaki noktaların bir kümede, bozulmaya yaklaştığı anların ise başka bir kümede nasıl toplandığını göstereceğiz. Motorun "ölüme gidiş yolculuğunu" bir grafik üzerinde çizeceğiz.
+
+Neden Bu Proje "A+" Alır? (Hocaya Karşı Savunman)
+
+Hocan "Neden bu kadar uğraştınız?" derse şu 3 maddeyi söyleyeceksin:
+
+Veri Verimliliği: "Hocam, gerçek dünyada jet motorlarının bozulma etiketlerini toplamak çok pahalıdır. Bizim modelimiz etiketsiz veriden de öğrenebiliyor."
+
+Gürültü Yönetimi: "SCARF'ın veri bozma (corruption) yöntemi, sensörlerdeki anlık hatalara ve gürültüye karşı modeli çok daha dayanıklı (robust) kılıyor."
+
+Matematiksel Derinlik: "Basit bir regresyon yerine, Bayesian esintili bir Contrastive Loss fonksiyonu kullanarak verinin gizil uzaydaki (latent space) geometrisini modelledik."
+
+3 Günlük Uygulama Özeti
+
+1. GÜN (Bugün): Veriyi temizle, "Kayan Pencere" (Sliding Window) yapısına sok ve SCARF'ın veri bozma (augmentation) mekanizmasını kodla.
+
+2. GÜN: Encoder modelini ve InfoNCE Loss fonksiyonunu yazıp, modeli "Ön-Eğitim" (Pre-training) sürecine sok.
+
+3. GÜN: RUL tahminini yap, başarı metriklerini (RMSE) hesapla ve t-SNE ile o meşhur "yaşlanma grafiğini" çiz.
+
+
+şimdi bu preje nasıl yüksek lisans dersi makine öğrenmesi dersi final projesi için uygun mu? uygun değilse nasıl uygun hale getirilebilir?
